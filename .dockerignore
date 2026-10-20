@@ -1,0 +1,31 @@
+# Referans projede bu dosya yoktu; node_modules ve .next build context'e giriyor,
+# build gereksiz yavaşlıyordu. (REBUILD_PROMPT §8.1)
+node_modules
+.next
+out
+build
+coverage
+
+.git
+.gitignore
+
+cypress
+cypress/videos
+cypress/screenshots
+
+docs
+*.md
+!README.md
+
+.env
+.env*.local
+
+.DS_Store
+*.tsbuildinfo
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# macOS meta dosyaları (AppleDouble) — Laravel config/migration yükleyicisini bozar
+**/._*
+**/.DS_Store

@@ -1,0 +1,16 @@
+export enum LocalStorageKeysEnum {
+  THEME = "theme",
+  Navbar = "navbar",
+  AccessToken = "accessToken",
+  RefreshToken = "refreshToken",
+  AccessTokenExpiration = "AccessTokenExpiration",
+  AccessibleMenuItems = "accessibleMenuItems",
+  PageInformations = "pageInformations",
+  UserId = "userId",
+  Username = "username",
+  ProfileInfo = "profileInfo",
+  Language = "language",
+  SupportedLanguages = "supportedLanguages",
+  SystemInfo = "systemInfo",
+  DefaultRoute = "defaultRoute",
+}

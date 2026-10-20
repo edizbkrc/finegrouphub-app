@@ -1,0 +1,26 @@
+# Test dağıtımı: imaj registry'ye push edilmez, agent üzerinde lokal build
+# edilip aynı makinede compose up ile ayağa kaldırılır (pull_policy: never).
+#
+# IMAGE_NAME, Azure DevOps pipeline'ının (pipeline-finegrouphub-app-test.yml)
+# `finegrouphub-app-test` variable group'undaki `imageRepository` değişkeninden
+# gelir; tanımlı değilse yerel "finegrouphub-app" imajına düşer.
+services:
+  finegrouphub_app:
+    container_name: finegrouphub_app_test
+    image: ${IMAGE_NAME:-finegrouphub-app}
+    restart: unless-stopped
+    pull_policy: never
+    networks:
+      container-network:
+        ipv4_address: 192.168.20.93
+
+networks:
+  container-network:
+    driver: bridge
+    name: container-network
+    external: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.20.0/24
+          gateway: 192.168.20.1

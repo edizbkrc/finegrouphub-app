@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    // Yalnızca ambient (global) tip paketleri. Varsayılan davranış node_modules/@types
+    // altındaki HER paketi örtük olarak yükler; @types/glob transitif olarak
+    // @types/minimatch@6 "stub"ını getiriyor ve o pakette .d.ts olmadığı için
+    // tsc TS2688 ile patlıyor. Modül olarak import edilen tipler (@types/react,
+    // @types/leaflet, @types/crypto-js …) bu listeden etkilenmez.
+    "types": ["node", "jest"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@layout/*": ["./src/common/layout/*"],
+      "@opsTable/*": ["./src/common/opsTable/*"],
+      "@common/*": ["./src/common/*"],
+      "@components/*": ["./src/components/*"],
+      "@enums/*": ["./src/enums/*"],
+      "@features/*": ["./src/features/*"],
+      "@forms/*": ["./src/forms/*"],
+      "@helpers/*": ["./src/helpers/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@network/*": ["./src/network/*"],
+      "@redux/*": ["./src/redux/*"],
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  // `cypress.config.ts` kökte olduğu için `cypress/` hariç tutmak yetmiyordu:
+  // `import { defineConfig } from "cypress"` bu dosyayı ana programa dahil
+  // edince Cypress'in global Chai/sinon-chai tipleri Jest'in `expect()`
+  // global'iyle çakışıyor, tüm `tests/*.test.ts` dosyaları kırılıyordu.
+  "exclude": ["node_modules", "cypress", "cypress.config.ts"]
+}

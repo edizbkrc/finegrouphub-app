@@ -1,0 +1,45 @@
+# Prod dağıtımı: registry imajı her zaman çekilir (pull_policy: always).
+#
+# Bu dosya yalnızca UYGULAMA container'ını tanımlar. Nginx ve PostgreSQL bu
+# projeye ait DEĞİLDİR — sunucuda TEK bir paylaşılan Nginx ve TEK bir
+# paylaşılan PostgreSQL çalışır, tüm projeler (finegrouphub-app,
+# finegrouphub-api, ve sunucudaki diğer projeler) aynı `container-network`
+# iç ağına bağlanıp bu paylaşılan servisleri kullanır. Nginx/Postgres bu
+# repodan YÖNETİLMEZ; yalnızca bu servisin route/upstream tanımı
+# `deploy/nginx/panel.conf` içinde bulunur ve paylaşılan Nginx'in
+# `conf.d/` dizinine kopyalanır/mount edilir (bkz. o dosyadaki not).
+#
+# Ön koşul: `container-network` köprüsü sunucuda önceden oluşturulmuş olmalı
+# (paylaşılan altyapı kurulumunun bir parçası, bu depodan değil):
+#   docker network create --driver bridge --subnet=192.168.20.0/24 \
+#     --gateway=192.168.20.1 container-network
+#
+# ⚠️ IP tahsisi: finehub_app (eski/.NET sürüm) 192.168.20.82'yi kullanıyor.
+# Bu servis çakışmayı önlemek için .83 kullanır — sunucudaki tüm projeler
+# arasında statik IP çakışmasını önlemek için merkezi bir IP tahsis tablosu
+# tutulmalı (bkz. REBUILD_PROMPT §8.4 "Statik IP çakışması" tuzağı).
+#
+# IMAGE_NAME, Azure DevOps pipeline'ının (pipeline-finegrouphub-app-prod.yml)
+# `finegrouphub-app-prod` variable group'undaki `imageRepository` değişkeninden
+# gelir (registry'deki tam nitelikli imaj adı, örn. "myorg/finegrouphub-app").
+# Tanımlı değilse yerel "finegrouphub-app" imajına düşer.
+services:
+  finegrouphub_app:
+    container_name: finegrouphub_app
+    image: ${IMAGE_NAME:-finegrouphub-app}
+    restart: unless-stopped
+    pull_policy: always
+    networks:
+      container-network:
+        ipv4_address: 192.168.20.83
+
+networks:
+  container-network:
+    driver: bridge
+    name: container-network
+    external: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.20.0/24
+          gateway: 192.168.20.1

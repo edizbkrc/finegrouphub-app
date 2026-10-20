@@ -1,0 +1,38 @@
+# `main` branch'ine commit/merge atıldığında Azure DevOps tarafında tetiklenir.
+trigger:
+  branches:
+    include:
+      - main
+pr: none
+
+resources:
+  repositories:
+    - repository: templates
+      type: git
+      name: Pipelines/templates
+
+variables:
+  - template: common/common-variables.yml@templates
+  - template: common/create-buildtag.yml@templates
+  - template: common/azure-cli-variables.yml@templates
+  - group: finegrouphub-app-prod
+
+stages:
+  # Docker imajını build edip registry'ye PUSH EDER.
+  - template: docker/build-buildandpush.yml@templates
+    parameters:
+      imageName: $(triggeredRepo)
+      imageRepository: $(imageRepository)
+      buildArgs: "$(BUILD_ENV)"
+      imageTag: $(buildTag)
+      pushImage: true
+      organizationName: $(azureOrganizationName)
+      projectName: $(azureProjectName)
+      variableGroupId: $(vgID)
+
+  # Sunucuda imajı pull edip (docker-compose-prod.yml: pull_policy always) ayağa kaldırır.
+  - template: docker/compose-downandup.yml@templates
+    parameters:
+      poolName: $(agenPoolName)
+      composeFile: $(composeFile)
+      generateEnv: false

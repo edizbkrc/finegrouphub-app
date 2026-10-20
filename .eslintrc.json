@@ -1,0 +1,161 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "import/order": [
+      1,
+      {
+        "groups": [
+          [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "object",
+            "type"
+          ]
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "next/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "next-intl",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "react-redux",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "react-hook-form",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "axios",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "moment",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "notistack",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@network/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@redux/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@hooks/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@helpers/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@layout/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@common/layout/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@opsTable/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@common/form/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@common/page/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@common/opsTable/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@common/inputs/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@forms/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@features/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@components/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@mui/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@mui/icons/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/common/types/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@/common/enums/**",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@enums/**",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "never"
+      }
+    ]
+  }
+}
